@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { Router, Link } from '@reach/router';
 import * as api from './api';
 
 import LandingPage from './components/page';
+import SiteNavbar from './components/SiteNavbar/SiteNavbar';
 
 class App extends Component {
   constructor(props) {
@@ -52,11 +53,7 @@ class App extends Component {
 
     return (
       <>
-        {ready && (
-          <Router>
-            <LandingPage config={config} apiNoResponse={apiNoResponse} />
-          </Router>
-        )}
+        {ready && <LandingPage config={config} apiNoResponse={apiNoResponse} />}
       </>
     );
   }

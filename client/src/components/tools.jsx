@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Menu } from 'semantic-ui-react';
-import { withRouter } from 'react-router-dom';
 
 import Accounts from './accounts';
 import Whosonline from './whosonline';
@@ -61,4 +60,4 @@ Tools.propTypes = {
   history: PropTypes.object.isRequired, // this comes from <Router> ('react-router')
 };
 
-export default withRouter(Tools);
+export default Tools;

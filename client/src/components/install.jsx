@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Link } from '@reach/router';
 import { Card, ListGroup } from 'react-bootstrap';
 import InfoDisplay from './InfoDisplay';
 
-function install(props) {
+function Install(props) {
   const { info } = props;
 
   return (
@@ -93,7 +93,7 @@ function install(props) {
   );
 }
 
-install.propTypes = {
+Install.propTypes = {
   info: PropTypes.shape({
     bootloader: PropTypes.string.isRequired,
     discord: PropTypes.string.isRequired,
@@ -102,7 +102,7 @@ install.propTypes = {
   }),
 };
 
-install.defaultProps = {
+Install.defaultProps = {
   info: {
     bootloader: '',
     discord: '',
@@ -111,4 +111,4 @@ install.defaultProps = {
   },
 };
 
-export default install;
+export default Install;

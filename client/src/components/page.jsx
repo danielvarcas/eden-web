@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
+
+import { Router } from '@reach/router';
 import Menu from './menu';
 import Hamburger from './hamburger';
 import Home from './home';
@@ -11,6 +12,7 @@ import Rules from './rules';
 import About from './about';
 import Contact from './contact';
 import './style.css';
+import SiteNavbar from './SiteNavbar/SiteNavbar';
 
 const Page = props => {
   const { location, config } = props;
@@ -20,51 +22,36 @@ const Page = props => {
     localStorage.getItem('page', data.to);
     setActive(false);
   };
-
+  const navLinks = [
+    { key: 1, href: '/home', text: 'News', iconClasses: '' },
+    { key: 2, href: '/install', text: 'Install', iconClasses: '' },
+    { key: 3, href: '/tools', text: 'Tools', iconClasses: '' },
+    { key: 4, href: '/links', text: 'Links', iconClasses: '' },
+    { key: 5, href: '/rules', text: 'Rules', iconClasses: '' },
+    { key: 6, href: '/about', text: 'About', iconClasses: '' },
+    { key: 7, href: '/contact', text: 'Contact', iconClasses: '' },
+  ];
   return (
     <div className="gm_main h-100">
-      <div className="gm_banner">
-        <Hamburger active={active} toggle={() => setActive(!active)} />
-        <h2 className="gm_banner_text">Eden</h2>
-      </div>
-      {config && Object.keys(config).length === 0 && (
-        <div className="alert alert-warning m-0 text-center">
-          <span>
-            Website tools are currently down. Please check again later.
-          </span>
-        </div>
-      )}
-      <Menu
-        active={active}
-        selection={location.pathname}
-        onClick={changePage}
-      />
-      <Switch>
-        <Route
-          exact
-          path="/install"
-          render={() => <Install info={config.install} />}
-        />
-        <Route exact path="/tools" render={() => <Tools />} />
-        <Route
-          exact
-          path="/links"
-          render={() => <Links links={config.links} />}
-        />
-        <Route
-          exact
-          path="/rules"
-          render={() => <Rules list={config.rules} />}
-        />
-        <Route exact path="/about" render={About} />
-        <Route
-          exact
-          path="/home"
-          render={() => <Home posts={config.posts} />}
-        />
-        <Route exact path="/contact" render={() => <Contact />} />
-        <Redirect from="/" to={localStorage.getItem('page') || '/home'} />
-      </Switch>
+      <Router>
+        <SiteNavbar navLinks={navLinks} path="/*" />
+        {config && Object.keys(config).length === 0 && (
+          <div className="alert alert-warning m-0 text-center" path="/*">
+            <span>
+              Website tools are currently down. Please check again later.
+            </span>
+          </div>
+        )}
+      </Router>
+      <Router primary={false} className="h-100">
+        <Install path="/install" info={config.install} />
+        <Tools path="/tools" />
+        <Links path="/links" links={config.links} />
+        <Rules path="/rules" list={config.rules} />
+        <About path="/about" />
+        <Home path="/home" posts={config.posts} />
+        <Contact path="/contact" />
+      </Router>
     </div>
   );
 };
@@ -112,4 +99,4 @@ Page.propTypes = {
   }).isRequired,
 };
 
-export default withRouter(Page);
+export default Page;
